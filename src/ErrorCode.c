@@ -10,8 +10,6 @@ const char* error_getErrorMessage(const ErrorCode code) {
             return "The operation attempted to use a NULL pointer";
         case ERROR_MATRIX_INVALID_OPERATION:
             return "The matrix operation is invalid";
-        case ERROR_NOT_IMPLEMENTED:
-            return "The procedure was not implemented";
         default:
             return "Unexpected error";
     }
