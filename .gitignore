@@ -55,6 +55,10 @@ dkms.conf
 build/
 
 # vscode files directory
+<<<<<<< HEAD
 .vscode/
 
 
+=======
+.vscode/
+>>>>>>> master
