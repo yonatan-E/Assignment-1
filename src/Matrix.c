@@ -178,7 +178,7 @@ ErrorCode matrix_multiplyMatrices(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
         printf("%s", error_getErrorMessage(error));
         return error;
     }
-    error = matrix_getWidth(lhs, &width);
+    error = matrix_getWidth(rhs, &width);
     if (!error_isSuccess(error)) {
         printf("%s", error_getErrorMessage(error));
         return error;
