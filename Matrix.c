@@ -101,7 +101,7 @@ ErrorCode matrix_setValue(PMatrix matrix, const uint32_t rowIndex, const uint32_
         return ERROR_INDEX_OUT_OF_BOUNDS;
     }
 
-    matrix->table[rowIndex * matrix->height + colIndex] = value;
+    matrix->table[rowIndex * matrix->width + colIndex] = value;
     return ERROR_SUCCESS;
 }
 
@@ -115,7 +115,7 @@ ErrorCode matrix_getValue(CPMatrix matrix, const uint32_t rowIndex, const uint32
         return ERROR_INDEX_OUT_OF_BOUNDS;
     }
 
-    *value = matrix->table[rowIndex * matrix->height + colIndex];
+    *value = matrix->table[rowIndex * matrix->width + colIndex];
     return ERROR_SUCCESS;
 }
 
