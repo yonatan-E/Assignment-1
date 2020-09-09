@@ -51,8 +51,8 @@ ErrorCode matrix_copy(PMatrix* result, CPMatrix source) {
     }
 
     // initializing the values of the result matrix
-    for (uint32_t i = 0; i < source->height; i++)
-        for (uint32_t j = 0; j < source->width; j++) {
+    for (uint32_t i = 0; i < source->height; ++i)
+        for (uint32_t j = 0; j < source->width; ++j) {
             double val;
             error = matrix_getValue(source, i, j, &val);
             if (!error_isSuccess(error)) {
@@ -134,8 +134,8 @@ ErrorCode matrix_add(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
     }
 
     // initializing the values of the result matrix
-    for (uint32_t i = 0; i < lhs->height; i++)
-        for (uint32_t j = 0; j < lhs->width; j++) {
+    for (uint32_t i = 0; i < lhs->height; ++i)
+        for (uint32_t j = 0; j < lhs->width; ++j) {
             double lhs_val;
             error = matrix_getValue(lhs, i, j, &lhs_val);
             if (!error_isSuccess(error)) {
@@ -169,11 +169,11 @@ ErrorCode matrix_multiplyMatrices(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
     }
 
     // initializing the values of the result matrix
-    for (uint32_t i = 0; i < lhs->height; i++)
-        for (uint32_t j = 0; j < rhs->width; j++) {
+    for (uint32_t i = 0; i < lhs->height; ++i)
+        for (uint32_t j = 0; j < rhs->width; ++j) {
             double val = 0;
             uint32_t matrix_size = lhs->width;
-            for (uint32_t k = 0; k < matrix_size; k++) {
+            for (uint32_t k = 0; k < matrix_size; ++k) {
                 double lhs_val;
                 error = matrix_getValue(lhs, i, k, &lhs_val);
                 if (!error_isSuccess(error)) {
@@ -199,8 +199,8 @@ ErrorCode matrix_multiplyWithScalar(PMatrix matrix, const double scalar) {
         return ERROR_NULL_POINTER;
 
     // multiplying all the values of the matrix by the scalar
-    for (uint32_t i = 0; i < matrix->height; i++)
-        for (uint32_t j = 0; j < matrix->width; j++) {
+    for (uint32_t i = 0; i < matrix->height; ++i)
+        for (uint32_t j = 0; j < matrix->width; ++j) {
             double val;
             ErrorCode error = matrix_getValue(matrix, i, j, &val);
             if (!error_isSuccess(error)) {
