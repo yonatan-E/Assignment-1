@@ -20,14 +20,16 @@ ErrorCode matrix_create(PMatrix* matrix, uint32_t height, uint32_t width) {
     // allocation memory for the matrix
     *matrix = (PMatrix)malloc(sizeof(struct Matrix));
     // checking if the allocation succeeded
-    if (*matrix == NULL)
+    if (*matrix == NULL) {
         return ERROR_ALLOCATION_FAILED;
+    }
 
     // allocating memory for the matrix table
-    (*matrix)->table = (double**)malloc(height * sizeof(double*));
+    (*matrix)->table = (double*)malloc(height * width * sizeof(double));
     // checking if the allocation succeeded
-    if ((*matrix)->table == NULL)
-        return ERROR_NULL_POINTER;
+    if ((*matrix)->table == NULL) {
+        return ERROR_ALLOCATION_FAILED;
+    }
 
     // initializing the size fields of the matrix
     (*matrix)->height = height;
@@ -40,20 +42,8 @@ ErrorCode matrix_copy(PMatrix* result, CPMatrix source) {
         return ERROR_NULL_POINTER;
     }
 
-    // getting the result matrix sizes
-    uint32_t height, width;
-    ErrorCode error = matrix_getHeight(source, &height);
-    if (!error_isSuccess(error)) {
-        printf("%s", error_getErrorMessage(error));
-        return error;
-    }
-    error = matrix_getWidth(source, &width);
-    if (!error_isSuccess(error)) {
-        printf("%s", error_getErrorMessage(error));
-        return error;
-    }
     // allocating the result matrix
-    error = matrix_create(result, height, width);
+    ErrorCode error = matrix_create(result, source->height, source->width);
     // checking if the allocation succeeded
     if (!error_isSuccess(error)) {
         printf("%s", error_getErrorMessage(error));
@@ -61,8 +51,8 @@ ErrorCode matrix_copy(PMatrix* result, CPMatrix source) {
     }
 
     // initializing the values of the result matrix
-    for (uint32_t i = 0; i < height; i++)
-        for (uint32_t j = 0; j < width; j++) {
+    for (uint32_t i = 0; i < source->height; i++)
+        for (uint32_t j = 0; j < source->width; j++) {
             double val;
             error = matrix_getValue(source, i, j, &val);
             if (!error_isSuccess(error)) {
@@ -83,8 +73,6 @@ void matrix_destroy(PMatrix matrix) {
         return;
     }
     // freeing the memory of the matrix table
-    for (uint32_t i = 0; i < matrix->height; i++)
-        free(matrix->table[i]);
     free(matrix->table);
     free(matrix);
 }
@@ -115,7 +103,7 @@ ErrorCode matrix_setValue(PMatrix matrix, uint32_t rowIndex, uint32_t colIndex,
         return ERROR_INDEX_OUT_OF_BOUND;
     }
 
-    matrix->table[rowIndex][colIndex] = value;
+    matrix->table[rowIndex * matrix->height + colIndex] = value;
     return ERROR_SUCCESS;
 }
 
@@ -129,7 +117,7 @@ ErrorCode matrix_getValue(CPMatrix matrix, uint32_t rowIndex, uint32_t colIndex,
         return ERROR_INDEX_OUT_OF_BOUND;
     }
 
-    *value = matrix->table[rowIndex][colIndex];
+    *value = matrix->table[rowIndex * matrix->height + colIndex];
     return ERROR_SUCCESS;
 }
 
@@ -190,12 +178,7 @@ ErrorCode matrix_multiplyMatrices(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
     for (uint32_t i = 0; i < lhs->height; i++)
         for (uint32_t j = 0; j < rhs->width; j++) {
             double val = 0;
-            uint32_t matrix_size;
-            error = matrix_getWidth(lhs, &matrix_size);
-            if (!error_isSuccess(error)) {
-                printf("%s", error_getErrorMessage(error));
-                return error;
-            }
+            uint32_t matrix_size = lhs->width;
             for (uint32_t k = 0; k < matrix_size; k++) {
                 double lhs_val, rhs_val;
                 error = matrix_getValue(lhs, i, k, &lhs_val);
