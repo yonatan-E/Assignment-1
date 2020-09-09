@@ -1,6 +1,5 @@
 #include "Matrix.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 struct Matrix {
     double* table;
