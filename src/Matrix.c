@@ -97,7 +97,7 @@ ErrorCode matrix_setValue(PMatrix matrix, uint32_t rowIndex, uint32_t colIndex,
     }
 
     if (rowIndex >= matrix->height || colIndex >= matrix->width) {
-        return ERROR_INDEX_OUT_OF_BOUND;
+        return ERROR_INDEX_OUT_OF_BOUNDS;
     }
 
     matrix->table[rowIndex * matrix->height + colIndex] = value;
@@ -111,7 +111,7 @@ ErrorCode matrix_getValue(CPMatrix matrix, uint32_t rowIndex, uint32_t colIndex,
     }
 
     if (rowIndex >= matrix->height || colIndex >= matrix->width) {
-        return ERROR_INDEX_OUT_OF_BOUND;
+        return ERROR_INDEX_OUT_OF_BOUNDS;
     }
 
     *value = matrix->table[rowIndex * matrix->height + colIndex];
