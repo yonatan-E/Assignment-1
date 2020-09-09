@@ -7,7 +7,7 @@ struct Matrix {
     uint32_t height, width;
 };
 
-ErrorCode matrix_create(PMatrix* matrix, uint32_t height, uint32_t width) {
+ErrorCode matrix_create(PMatrix* matrix, const uint32_t height, const uint32_t width) {
     // allocating memory for the matrix pointer, in case it's null
     if (matrix == NULL) {
         matrix = (PMatrix*)malloc(sizeof(PMatrix));
@@ -90,8 +90,8 @@ ErrorCode matrix_getWidth(CPMatrix matrix, uint32_t* result) {
     return ERROR_SUCCESS;
 }
 
-ErrorCode matrix_setValue(PMatrix matrix, uint32_t rowIndex, uint32_t colIndex,
-                          double value) {
+ErrorCode matrix_setValue(PMatrix matrix, const uint32_t rowIndex, const uint32_t colIndex,
+                          const double value) {
     if (matrix == NULL) {
         return ERROR_NULL_POINTER;
     }
@@ -104,7 +104,7 @@ ErrorCode matrix_setValue(PMatrix matrix, uint32_t rowIndex, uint32_t colIndex,
     return ERROR_SUCCESS;
 }
 
-ErrorCode matrix_getValue(CPMatrix matrix, uint32_t rowIndex, uint32_t colIndex,
+ErrorCode matrix_getValue(CPMatrix matrix, const uint32_t rowIndex, const uint32_t colIndex,
                           double* value) {
     if (matrix == NULL) {
         return ERROR_NULL_POINTER;
@@ -191,7 +191,7 @@ ErrorCode matrix_multiplyMatrices(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
     return ERROR_SUCCESS;
 }
 
-ErrorCode matrix_multiplyWithScalar(PMatrix matrix, double scalar) {
+ErrorCode matrix_multiplyWithScalar(PMatrix matrix, const double scalar) {
     if (matrix == NULL)
         return ERROR_NULL_POINTER;
 
