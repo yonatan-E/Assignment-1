@@ -120,11 +120,13 @@ ErrorCode matrix_getValue(CPMatrix matrix, const uint32_t rowIndex, const uint32
 }
 
 ErrorCode matrix_add(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
-    if (lhs == NULL || rhs == NULL)
+    if (lhs == NULL || rhs == NULL) {
         return ERROR_NULL_POINTER;
+    }
     // can't add matrices with different sizes
-    if (lhs->height != rhs->height || lhs->width != rhs->width)
+    if (lhs->height != rhs->height || lhs->width != rhs->width) {
         return ERROR_MATRIX_INVALID_OPERATION;
+    }
 
     // allocating the result matrix
     ErrorCode error = matrix_create(result, lhs->height, lhs->width);
@@ -155,11 +157,13 @@ ErrorCode matrix_add(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
 }
 
 ErrorCode matrix_multiplyMatrices(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
-    if (lhs == NULL || rhs == NULL)
+    if (lhs == NULL || rhs == NULL) {
         return ERROR_NULL_POINTER;
+    }
     // can't multiply matrices with unmatched sizes
-    if (lhs->width != rhs->height)
+    if (lhs->width != rhs->height) {
         return ERROR_MATRIX_INVALID_OPERATION;
+    }
 
     // allocating the result matrix
     ErrorCode error = matrix_create(result, lhs->height, rhs->width);
@@ -195,8 +199,9 @@ ErrorCode matrix_multiplyMatrices(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
 }
 
 ErrorCode matrix_multiplyWithScalar(PMatrix matrix, const double scalar) {
-    if (matrix == NULL)
+    if (matrix == NULL) {
         return ERROR_NULL_POINTER;
+    }
 
     // multiplying all the values of the matrix by the scalar
     for (uint32_t i = 0; i < matrix->height; ++i)
