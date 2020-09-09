@@ -46,7 +46,6 @@ ErrorCode matrix_copy(PMatrix* result, CPMatrix source) {
     ErrorCode error = matrix_create(result, source->height, source->width);
     // checking if the allocation succeeded
     if (!error_isSuccess(error)) {
-        printf("%s", error_getErrorMessage(error));
         return error;
     }
 
@@ -56,12 +55,10 @@ ErrorCode matrix_copy(PMatrix* result, CPMatrix source) {
             double val;
             error = matrix_getValue(source, i, j, &val);
             if (!error_isSuccess(error)) {
-                printf("%s", error_getErrorMessage(error));
                 return error;
             }
             error = matrix_setValue(*result, i, j, val);
             if (!error_isSuccess(error)) {
-                printf("%s", error_getErrorMessage(error));
                 return error;
             }
         }
@@ -132,7 +129,6 @@ ErrorCode matrix_add(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
     ErrorCode error = matrix_create(result, lhs->height, lhs->width);
     // checking if the allocation succeeded
     if (!error_isSuccess(error)) {
-        printf("%s", error_getErrorMessage(error));
         return error;
     }
 
@@ -142,17 +138,14 @@ ErrorCode matrix_add(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
             double lhs_val, rhs_val;
             error = matrix_getValue(lhs, i, j, &lhs_val);
             if (!error_isSuccess(error)) {
-                printf("%s", error_getErrorMessage(error));
                 return error;
             }
             error = matrix_getValue(rhs, i, j, &rhs_val);
             if (!error_isSuccess(error)) {
-                printf("%s", error_getErrorMessage(error));
                 return error;
             }
             error = matrix_setValue(*result, i, j, lhs_val + rhs_val);
             if (!error_isSuccess(error)) {
-                printf("%s", error_getErrorMessage(error));
                 return error;
             }
         }
@@ -170,7 +163,6 @@ ErrorCode matrix_multiplyMatrices(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
     ErrorCode error = matrix_create(result, lhs->height, rhs->width);
     // checking if the allocation succeeded
     if (!error_isSuccess(error)) {
-        printf("%s", error_getErrorMessage(error));
         return error;
     }
 
@@ -183,19 +175,16 @@ ErrorCode matrix_multiplyMatrices(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
                 double lhs_val, rhs_val;
                 error = matrix_getValue(lhs, i, k, &lhs_val);
                 if (!error_isSuccess(error)) {
-                    printf("%s", error_getErrorMessage(error));
                     return error;
                 }
                 error = matrix_getValue(rhs, k, j, &rhs_val);
                 if (!error_isSuccess(error)) {
-                    printf("%s", error_getErrorMessage(error));
                     return error;
                 }
                 val += lhs_val * rhs_val;
             }
             error = matrix_setValue(*result, i, j, val);
             if (!error_isSuccess(error)) {
-                printf("%s", error_getErrorMessage(error));
                 return error;
             }
         }
@@ -212,12 +201,10 @@ ErrorCode matrix_multiplyWithScalar(PMatrix matrix, double scalar) {
             double val;
             ErrorCode error = matrix_getValue(matrix, i, j, &val);
             if (!error_isSuccess(error)) {
-                printf("%s", error_getErrorMessage(error));
                 return error;
             }
             error = matrix_setValue(matrix, i, j, scalar * val);
             if (!error_isSuccess(error)) {
-                printf("%s", error_getErrorMessage(error));
                 return error;
             }
         }
