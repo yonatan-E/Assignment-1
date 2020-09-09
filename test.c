@@ -5,7 +5,7 @@
 #include "Matrix.h"
 
 #define MATRIX_HEIGHT 4
-#define MATRIX_WIDTH 4
+#define MATRIX_WIDTH 3
 
 void printMatrix(const PMatrix matrix) {
     uint32_t height, width;
@@ -22,30 +22,34 @@ void printMatrix(const PMatrix matrix) {
     printf("\n");
 }
 
-ErrorCode initialize_matrix(const PMatrix matrix, const uint32_t height,
+void initialize_matrix(const PMatrix matrix, const uint32_t height,
                             const uint32_t width) {
     uint32_t i = 0;
     uint32_t j = 0;
-    ErrorCode result = ERROR_SUCCESS;
 
     for (i = 0; i < height; ++i) {
         for (j = 0; j < width; ++j) {
-            result = matrix_setValue(matrix, i, j, (double)(i * 10 + j));
-            if (!error_isSuccess(result)) {
-                fprintf(stderr, "Error matrix_setValue: %s\n",
-                        error_getErrorMessage(result));
-                return result;
-            }
+            matrix_setValue(matrix, i, j, i + j);
         }
     }
-
-    return ERROR_SUCCESS;
 }
 
 int main() {
-    PMatrix matrix = NULL;
-    initialize_matrix(matrix, MATRIX_HEIGHT, MATRIX_WIDTH);
-    printMatrix(matrix);
+    PMatrix matrix1 = NULL;
+    matrix_create(&matrix1, MATRIX_HEIGHT, MATRIX_WIDTH);
+    PMatrix matrix2 = NULL;
+    matrix_create(&matrix2, MATRIX_HEIGHT, MATRIX_WIDTH);
+
+    initialize_matrix(matrix1, MATRIX_HEIGHT, MATRIX_WIDTH);
+    initialize_matrix(matrix2, MATRIX_HEIGHT, MATRIX_WIDTH);
+
+    PMatrix sum = NULL;
+    matrix_multiplyWithScalar(matrix1, 3);
+    matrix_add(&sum, matrix1, matrix2);
+
+    printMatrix(matrix1);
+    printMatrix(matrix2);
+    printMatrix(sum);
 
     return 0;
 }
