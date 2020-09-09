@@ -4,7 +4,8 @@
 
 struct Matrix {
     double* table;
-    uint32_t height, width;
+    uint32_t height;
+    uint32_t width;
 };
 
 ErrorCode matrix_create(PMatrix* matrix, const uint32_t height, const uint32_t width) {
@@ -135,11 +136,12 @@ ErrorCode matrix_add(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
     // initializing the values of the result matrix
     for (uint32_t i = 0; i < lhs->height; i++)
         for (uint32_t j = 0; j < lhs->width; j++) {
-            double lhs_val, rhs_val;
+            double lhs_val;
             error = matrix_getValue(lhs, i, j, &lhs_val);
             if (!error_isSuccess(error)) {
                 return error;
             }
+            double rhs_val;
             error = matrix_getValue(rhs, i, j, &rhs_val);
             if (!error_isSuccess(error)) {
                 return error;
@@ -172,11 +174,12 @@ ErrorCode matrix_multiplyMatrices(PMatrix* result, CPMatrix lhs, CPMatrix rhs) {
             double val = 0;
             uint32_t matrix_size = lhs->width;
             for (uint32_t k = 0; k < matrix_size; k++) {
-                double lhs_val, rhs_val;
+                double lhs_val;
                 error = matrix_getValue(lhs, i, k, &lhs_val);
                 if (!error_isSuccess(error)) {
                     return error;
                 }
+                double rhs_val;
                 error = matrix_getValue(rhs, k, j, &rhs_val);
                 if (!error_isSuccess(error)) {
                     return error;
