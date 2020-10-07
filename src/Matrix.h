@@ -17,7 +17,7 @@ typedef const struct Matrix* CPMatrix;
  * @param[in] width Width of the matrix
  * @return ErrorCode
  */
-ErrorCode matrix_create(PMatrix* matrix, uint32_t height, uint32_t width);
+ErrorCode matrix_create(PMatrix* matrix, const uint32_t height, const uint32_t width);
 
 /**
  * @brief Creates a new matrix from an old matrix.
@@ -63,8 +63,8 @@ ErrorCode matrix_getWidth(CPMatrix matrix, uint32_t* result);
  * @param[in] value Value to set.
  * @return ErrorCode
  */
-ErrorCode matrix_setValue(PMatrix matrix, uint32_t rowIndex, uint32_t colIndex,
-                          double value);
+ErrorCode matrix_setValue(PMatrix matrix, const uint32_t rowIndex, const uint32_t colIndex,
+                          const double value);
 
 /**
  * @brief Sets a value to the matrix.
@@ -76,7 +76,7 @@ ErrorCode matrix_setValue(PMatrix matrix, uint32_t rowIndex, uint32_t colIndex,
  *  the value from the matrix.
  * @return ErrorCode
  */
-ErrorCode matrix_getValue(CPMatrix matrix, uint32_t rowIndex, uint32_t colIndex,
+ErrorCode matrix_getValue(CPMatrix matrix, const uint32_t rowIndex, const uint32_t colIndex,
                           double* value);
 
 /**
@@ -110,4 +110,4 @@ ErrorCode matrix_multiplyMatrices(PMatrix* result, CPMatrix lhs, CPMatrix rhs);
  * @param[in] scalar The scalar to multiply with.
  * @return ErrorCode
  */
-ErrorCode matrix_multiplyWithScalar(PMatrix matrix, double scalar);
+ErrorCode matrix_multiplyWithScalar(PMatrix matrix, const double scalar);
